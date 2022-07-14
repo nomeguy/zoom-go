@@ -13,7 +13,7 @@ import (
 */
 
 func (client Client) UpdateMeetingStatus(meetingId int, status string) (err error) {
-	
+
 	updateMeetingStatusRequest := UpdateMeetingStatusRequest{
 		Action: status,
 	}
@@ -24,7 +24,7 @@ func (client Client) UpdateMeetingStatus(meetingId int, status string) (err erro
 		return
 	}
 
-	endpoint := fmt.Sprintf("/meetings/%d/status", meetingId)
+	endpoint := fmt.Sprintf("/%s/%d/status", client.getType(), meetingId)
 	httpMethod := http.MethodPut
 
 	_, err = client.executeRequestWithBody(endpoint, httpMethod, reqBody)

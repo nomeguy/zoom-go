@@ -11,7 +11,7 @@ import (
 */
 func (client Client) DeleteMeeting(meetingId int) (err error) {
 
-	endpoint := fmt.Sprintf("/meetings/%d", meetingId)
+	endpoint := fmt.Sprintf("/%s/%d", client.getType(), meetingId)
 	httpMethod := http.MethodDelete
 
 	_, err = client.executeRequest(endpoint, httpMethod)
@@ -21,4 +21,3 @@ func (client Client) DeleteMeeting(meetingId int) (err error) {
 
 	return
 }
-

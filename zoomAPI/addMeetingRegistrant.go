@@ -49,7 +49,7 @@ func (client Client) AddMeetingRegistrant(meetingId int,
 		CustomQuestions:       customQuestions,
 	}
 
-	endpoint := fmt.Sprintf("/meetings/%d/registrants", meetingId)
+	endpoint := fmt.Sprintf("/%s/%d/registrants", client.getType(), meetingId)
 	httpMethod := http.MethodPost
 
 	var reqBody []byte

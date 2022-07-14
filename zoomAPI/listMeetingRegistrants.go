@@ -12,7 +12,7 @@ import (
 */
 func (client Client) ListMeetingRegistrants(meetingId int) (apiResponse ListMeetingRegistrantsResponse, err error) {
 
-	endpoint := fmt.Sprintf("/meetings/%d/registrants", meetingId)
+	endpoint := fmt.Sprintf("/%s/%d/registrants", client.getType(), meetingId)
 	httpMethod := http.MethodGet
 
 	var b []byte
@@ -28,4 +28,3 @@ func (client Client) ListMeetingRegistrants(meetingId int) (apiResponse ListMeet
 
 	return
 }
-

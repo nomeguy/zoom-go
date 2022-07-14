@@ -12,7 +12,7 @@ import (
 */
 func (client Client) GetMeetingInvitation(meetingId int) (getMeetingInvitationResponse GetMeetingInvitationResponse, err error) {
 
-	endpoint := fmt.Sprintf("/meetings/%d/invitation", meetingId)
+	endpoint := fmt.Sprintf("/%s/%d/invitation", client.getType(), meetingId)
 	httpMethod := http.MethodGet
 
 	var b []byte

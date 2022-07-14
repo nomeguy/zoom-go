@@ -12,6 +12,7 @@ import (
 type Client struct {
 	url       string
 	authToken string
+	IsWebinar bool
 }
 
 func NewClient(apiUrl string, authToken string) (client Client) {
@@ -20,6 +21,14 @@ func NewClient(apiUrl string, authToken string) (client Client) {
 	client.authToken = authToken
 
 	return
+}
+
+func (client Client) getType() string {
+	if client.IsWebinar {
+		return "webinars"
+	} else {
+		return "meetings"
+	}
 }
 
 func (client Client) executeRequest(endpoint string, httpMethod string) (response []byte, err error) {
@@ -46,7 +55,7 @@ func (client Client) executeRequest(endpoint string, httpMethod string) (respons
 	if httpStatusCode != 200 {
 		switch httpStatusCode {
 		case 401:
-			err = errors.New(fmt.Sprintf("unauthorized error %d encountered, " +
+			err = errors.New(fmt.Sprintf("unauthorized error %d encountered, "+
 				"check your auth token if it's still valid", httpStatusCode))
 		default:
 			err = errors.New(fmt.Sprintf("http error %d encountered in API call", httpStatusCode))
@@ -90,7 +99,7 @@ func (client Client) executeRequestWithBody(endpoint string, httpMethod string, 
 
 		switch httpStatusCode {
 		case 401:
-			err = errors.New(fmt.Sprintf("unauthorized error %d encountered, " +
+			err = errors.New(fmt.Sprintf("unauthorized error %d encountered, "+
 				"check your auth token if it's still valid", httpStatusCode))
 		default:
 			err = errors.New(fmt.Sprintf("http error %d encountered in API call", httpStatusCode))
