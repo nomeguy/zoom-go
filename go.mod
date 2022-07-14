@@ -1,3 +1,3 @@
-module github.com/donvito/zoom-go
+module github.com/nomeguy/zoom-go
 
 go 1.13

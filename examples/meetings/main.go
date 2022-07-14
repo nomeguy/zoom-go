@@ -2,8 +2,8 @@ package main
 
 import (
 	"fmt"
-	"github.com/donvito/zoom-go/zoomAPI"
-	"github.com/donvito/zoom-go/zoomAPI/constants/meeting"
+	"github.com/nomeguy/zoom-go/zoomAPI"
+	"github.com/nomeguy/zoom-go/zoomAPI/constants/meeting"
 	"log"
 	"os"
 )
@@ -196,7 +196,7 @@ func listMeetingRegistrantsExample() {
 
 }
 
-func updateMeetingStatusExample(){
+func updateMeetingStatusExample() {
 
 	//Create a new Zoom API client
 	apiClient := zoomAPI.NewClient(os.Getenv("ZOOM_API_URL"),

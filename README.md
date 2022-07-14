@@ -34,7 +34,7 @@ https://marketplace.zoom.us/docs/guides/build/jwt-app
 
 ### Download the library to your project
 ```
-go get "github.com/donvito/zoom-go/zoomAPI"
+go get "github.com/nomeguy/zoom-go/zoomAPI"
 ```
 
 ## Examples
