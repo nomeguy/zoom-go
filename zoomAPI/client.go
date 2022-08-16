@@ -13,14 +13,14 @@ type Client struct {
 	url        string
 	authToken  string
 	IsWebinar  bool
-	httpClient *http.Client
+	HttpClient *http.Client
 }
 
-func NewClient(apiUrl string, authToken string) (client Client) {
+func NewClient(apiUrl string, authToken string, httpClient *http.Client) (client Client) {
 
 	client.url = apiUrl
 	client.authToken = authToken
-	client.httpClient = &http.Client{}
+	client.HttpClient = httpClient
 
 	return
 }
@@ -31,10 +31,6 @@ func (client Client) getType() string {
 	} else {
 		return "meetings"
 	}
-}
-
-func (client Client) SetHttpClient(httpClient *http.Client) {
-	client.httpClient = httpClient
 }
 
 func (client Client) executeRequest(endpoint string, httpMethod string) (response []byte, err error) {
@@ -48,7 +44,7 @@ func (client Client) executeRequest(endpoint string, httpMethod string) (respons
 	req.Header.Add("Content-Type", "application/json")
 
 	var resp *http.Response
-	resp, err = client.httpClient.Do(req)
+	resp, err = client.HttpClient.Do(req)
 	if err != nil {
 		return
 	}
@@ -89,7 +85,7 @@ func (client Client) executeRequestWithBody(endpoint string, httpMethod string, 
 	req.Header.Add("Content-Type", "application/json")
 
 	var resp *http.Response
-	resp, err = client.httpClient.Do(req)
+	resp, err = client.HttpClient.Do(req)
 	if err != nil {
 		return
 	}
