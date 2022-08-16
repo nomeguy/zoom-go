@@ -10,15 +10,17 @@ import (
 )
 
 type Client struct {
-	url       string
-	authToken string
-	IsWebinar bool
+	url        string
+	authToken  string
+	IsWebinar  bool
+	httpClient *http.Client
 }
 
 func NewClient(apiUrl string, authToken string) (client Client) {
 
 	client.url = apiUrl
 	client.authToken = authToken
+	client.httpClient = &http.Client{}
 
 	return
 }
@@ -31,9 +33,11 @@ func (client Client) getType() string {
 	}
 }
 
-func (client Client) executeRequest(endpoint string, httpMethod string) (response []byte, err error) {
-	httpClient := &http.Client{}
+func (client Client) SetHttpClient(httpClient *http.Client) {
+	client.httpClient = httpClient
+}
 
+func (client Client) executeRequest(endpoint string, httpMethod string) (response []byte, err error) {
 	url := fmt.Sprintf("%s%s", client.url, endpoint)
 	req, err := http.NewRequest(httpMethod, url, nil)
 	if err != nil {
@@ -44,7 +48,7 @@ func (client Client) executeRequest(endpoint string, httpMethod string) (respons
 	req.Header.Add("Content-Type", "application/json")
 
 	var resp *http.Response
-	resp, err = httpClient.Do(req)
+	resp, err = client.httpClient.Do(req)
 	if err != nil {
 		return
 	}
@@ -73,8 +77,6 @@ func (client Client) executeRequest(endpoint string, httpMethod string) (respons
 }
 
 func (client Client) executeRequestWithBody(endpoint string, httpMethod string, body []byte) (response []byte, err error) {
-	httpClient := &http.Client{}
-
 	url := fmt.Sprintf("%s%s", client.url, endpoint)
 
 	var req *http.Request
@@ -87,7 +89,7 @@ func (client Client) executeRequestWithBody(endpoint string, httpMethod string, 
 	req.Header.Add("Content-Type", "application/json")
 
 	var resp *http.Response
-	resp, err = httpClient.Do(req)
+	resp, err = client.httpClient.Do(req)
 	if err != nil {
 		return
 	}
